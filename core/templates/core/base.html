@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html class="no-js">
+
+<head>
+  <title>INICIO</title>
+
+  {% load pwa %}
+  {% progressive_web_app_meta %}
+  {% load static %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="{% static 'core/js/nav.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'core/css/nav.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/responsiveiframe.css' %}">
+  <script src="{% static 'core/js/responsive.js' %}"></script>
+
+</head>
+
+<body class=".cuerpo" background="{% static 'core/img/fondo.jpg' %}">
+
+  <div align=center>
+    <a href="{% url 'inicio' %}">
+      <h1 style="font-size:25px; color: rgb(63, 79, 90); border: rgb(255, 4, 4);">SISTEMA INVENTARIO CITT</h1>
+    </a>
+  </div>
+
+  <div class="topnav" id="myTopnav">
+    <a class="text-danger" href="{% url 'inicio' %}">INICIO</a>
+    {% if not user.is_authenticated %}
+    <a href="{% url 'login' %}">LOGIN</a>
+    {% endif %}
+    {% if user.is_staff %}
+    <a href="{% url 'listadoarticulos' %}">LISTADO ARTICULOS</a>
+    {% endif %}
+    {% if user.is_staff %}
+    <a href="{% url 'nuevoarticulo' %}">NUEVO ARTICULO</a>
+    <a href="{% url 'listadosolicitudes' %}">LISTADO SOLICITUDES</a>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'solicitarreserva' %}">SOLICITUD RESERVA</a>
+    <a href="#"> Usuario: {{ user.username }}</a>
+    <a href="{% url 'logout' %}">Desconectar</a>
+    {% endif %}
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {% if messages %}
+  {% for m in messages %}
+  <script>
+    Swal.fire({
+      "title": "Felicitaciones",
+      "text": "{{m}}",
+      "icon": "success"
+    })
+  </script>
+
+  {% endfor %}
+  {% endif %}
+
+
+  {% block contenido %}
+
+
+  {% endblock %}
+
+
+  <div>
+    <footer class="footer">
+      <center>© 2022. Todos los derechos reservados. Desarrollado por CJDR Creaciones.</center>
+    </footer>
+  </div>
+</body>
+
+</html>
